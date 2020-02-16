@@ -2,6 +2,8 @@
   "elements": [
     { "type": "Label", "label": "IP" },
     { "type": "ValidationTextBox", "name": "IP", "caption": "IP" },
+    { "type": "Label", "label": "Port" },
+    { "type": "ValidationTextBox", "name": "Port", "caption": "Port" },
     { "type": "Label", "label": "Update interval" },
     { "type": "IntervalBox", "name": "Period", "caption": "Seconds" }
   ],
