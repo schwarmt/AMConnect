@@ -260,7 +260,8 @@ class AMConnect extends IPSModule {
                 $Variablen_ID = null;
                 $Variablen_ID = $this->GetIDForIdent($key);
                 if(isset($Variablen_ID)) {
-                    $am_value = $json->$value[0];
+                    $id=$value[0];
+                    $am_value = $json->$id;
                     $Variable_Daten = IPS_GetVariable($Variablen_ID);
                     // 0 = Bool, 1 = Integer, 2 = Float, 3 = String
                     $Variablen_Typ = $Variable_Daten['VariableValue']['ValueType'];
