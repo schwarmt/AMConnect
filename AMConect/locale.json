@@ -1,0 +1,9 @@
+{
+  "translations": {
+    "de": {
+      "IP": "IP-Adresse des Automowers",
+      "Port": "Port des Automowers",
+      "Update interval": "Aktualisierungs-Intervall in Sekunden"
+    }
+  }
+}

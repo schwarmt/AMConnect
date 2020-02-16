@@ -1,0 +1,12 @@
+{
+  "id": "{69F6881D-B39C-5ECB-C8C1-BD489411FD26}",
+  "name": "AMConnect",
+  "type": 3,
+  "vendor": "Husquarna",
+  "aliases": [],
+  "parentRequirements": [],
+  "childRequirements": [],
+  "implemented": [],
+  "prefix": "AMC",
+  "url": "https://github.com/schwarmt/amconnect"
+}

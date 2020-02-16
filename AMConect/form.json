@@ -1,0 +1,20 @@
+{
+  "elements": [
+    { "type": "Label", "label": "IP" },
+    { "type": "ValidationTextBox", "name": "IP", "caption": "IP" },
+    { "type": "Label", "label": "Update interval" },
+    { "type": "IntervalBox", "name": "Period", "caption": "Seconds" }
+  ],
+  "actions": [
+    {
+      "type": "Button",
+      "caption": "Check connection",
+      "onClick": "AMC_CheckConnection($id);"
+    }
+  ],
+  "status": [
+    { "code": 102, "icon": "active", "caption": "OK!" },
+    { "code": 104, "icon": "inactive", "caption": "not active" },
+    { "code": 200, "icon": "error", "caption": "Error!" }
+  ]
+}
