@@ -262,24 +262,26 @@ class AMConnect extends IPSModule {
                 $Variablen_ID = $this->GetIDForIdent($key);
                 if(isset($Variablen_ID)) {
                     $id=$value[0];
-                    $am_value = $json->$id;
-                    $Variable_Daten = IPS_GetVariable($Variablen_ID);
-                    // 0 = Bool, 1 = Integer, 2 = Float, 3 = String
-                    $Variablen_Typ = $Variable_Daten['VariableType'];
-                    echo "id: ".$id." - value: ".$am_value." - Typ: ".$Variablen_Typ. " - Var-ID: ".$Variablen_ID;
-                    switch ($Variablen_Typ) {
-                        case 0:
-                            SetValueBoolean($Variablen_ID, $am_value);
-                            break;
-                        case 1:
-                            SetValueInteger($Variablen_ID, $am_value);
-                            break;
-                        case 2:
-                            SetValueFloat($Variablen_ID, $am_value);
-                            break;
-                        case 3:
-                            SetValueString($Variablen_ID, $am_value);
-                            break;
+                    if(array_key_exists($id,$json)){
+                        $am_value = $json->$id;
+                        $Variable_Daten = IPS_GetVariable($Variablen_ID);
+                        // 0 = Bool, 1 = Integer, 2 = Float, 3 = String
+                        $Variablen_Typ = $Variable_Daten['VariableType'];
+                        echo "id: ".$id." - value: ".$am_value." - Typ: ".$Variablen_Typ. " - Var-ID: ".$Variablen_ID;
+                        switch ($Variablen_Typ) {
+                            case 0:
+                                SetValueBoolean($Variablen_ID, $am_value);
+                                break;
+                            case 1:
+                                SetValueInteger($Variablen_ID, $am_value);
+                                break;
+                            case 2:
+                                SetValueFloat($Variablen_ID, $am_value);
+                                break;
+                            case 3:
+                                SetValueString($Variablen_ID, $am_value);
+                                break;
+                        }
                     }
                 }
             }
