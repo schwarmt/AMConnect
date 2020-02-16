@@ -15,8 +15,8 @@ class AMConnect extends IPSModule {
      'Mode' =>                           array("MODE", 0),
      'BatteryTemperature' =>             array("BATTERY_TEMPERATURE", 0.01),
      'TimeSinceCharging' =>              array("TIME_SINCE_CHARGING", 1),
-     'TimeToNextMeasure' =>              array("CHARGING_TEMPERATURE", 1),
-     'TIME_TO_NEXT_MEASURE' =>           array("TIME_TO_NEXT_MEASURE", 1),
+     'ChargingTemperature' =>            array("CHARGING_TEMPERATURE", 1),
+     'TimeToNextMeasure' =>              array("TIME_TO_NEXT_MEASURE", 1),
      'ChargingNumber' =>                 array("CHARGING_NUMBER", 1),
      'MowingDuration' =>                 array("MOWING_DURATION", 1),
      'BatteryCapacity' =>                array("BATTERY_CAPACITY", 1),
@@ -123,9 +123,10 @@ class AMConnect extends IPSModule {
         $this->RegisterVariableInteger('ChargingSearch', $this->Translate('ChargingSearch'), 'AMConnect.mAh');
         $this->RegisterVariableInteger('Status', $this->Translate('Status'));
         $this->RegisterVariableString('StatusText', $this->Translate('StatusText'));
-        $this->RegisterVariableInteger('Mode', $this->Translate('TargetTemperature'), 'AMConnect.Mode');
-        $this->RegisterVariableFloat('BatteryTemperature', $this->Translate('Mode'), '~Temperature');
+        $this->RegisterVariableInteger('Mode', $this->Translate('Mode'), 'AMConnect.Mode');
+        $this->RegisterVariableFloat('BatteryTemperature', $this->Translate('BatteryTemperature'), '~Temperature');
         $this->RegisterVariableInteger('TimeSinceCharging', $this->Translate('TimeSinceCharging'), 'AMConnect.Minutes');
+        $this->RegisterVariableFloat('ChargingTemperature', $this->Translate('ChargingTemperature'), '~Temperature');
         $this->RegisterVariableInteger('TimeToNextMeasure', $this->Translate('TimeToNextMeasure'), 'AMConnect.Minutes');
         $this->RegisterVariableInteger('ChargingNumber', $this->Translate('ChargingNumber'));
         $this->RegisterVariableInteger('MowingDuration', $this->Translate('MowingDuration'), 'AMConnect.Minutes');
