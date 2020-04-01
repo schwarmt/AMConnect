@@ -10,9 +10,9 @@ class AMConnect extends IPSModule {
      'ChargingTime' =>                   array("CHARGING_TIME", 1),
      'ChargingCapacity' =>               array("CHARGING_CAPACITY", 1),
      'ChargingSearch' =>                 array("CHARGING_SEARCH", 1),
-     'Status' =>                         array("STATUS", 0),
-     'StatusText' =>                     array("STATUS_TEXT", 0),
-     'Mode' =>                           array("MODE", 0),
+     'Status' =>                         array("STATUS", 1),
+     'StatusText' =>                     array("STATUS_TEXT", 1),
+     'Mode' =>                           array("MODE", 1),
      'BatteryTemperature' =>             array("BATTERY_TEMPERATURE", 0.01),
      'TimeSinceCharging' =>              array("TIME_SINCE_CHARGING", 1),
      'ChargingTemperature' =>            array("CHARGING_TEMPERATURE", 1),
@@ -23,12 +23,12 @@ class AMConnect extends IPSModule {
      'EngineSpeed' =>                    array("ENGINE_SPEED", 1),
      'BatteryVoltage' =>                 array("BATTERY_VOLTAGE", 0.001),
      'BatteryVoltageCompensated' =>      array ("BATTERY_VOLTAGE_COMPENSATED", 0.001),
-     'StatusSimulated' =>               array ("SIMULATED_STATUS", 0),
-     'StatusGroup' =>                   array("STATUS_GROUP", 0),
+     'StatusSimulated' =>               array ("SIMULATED_STATUS", 1),
+     'StatusGroup' =>                   array("STATUS_GROUP", 1),
      'LastUpdate' =>                    array("LAST_UPDATE", 0),
-     'ModeText' =>                      array("MODE_TEXT",0),
-     'CurrentArea' =>                   array("CURR_AREA",0 ),
-     'PassageStatus' =>                 array("PASSAGE_STATUS", 0)
+     'ModeText' =>                      array("MODE_TEXT",1),
+     'CurrentArea' =>                   array("CURR_AREA",1 ),
+     'PassageStatus' =>                 array("PASSAGE_STATUS", 1)
     );
 
     const modeMappingAM = array(
