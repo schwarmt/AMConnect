@@ -27,7 +27,6 @@ class AMConnect extends IPSModule {
      'StatusGroup' =>                   array("STATUS_GROUP", 1),
      'LastUpdate' =>                    array("LAST_UPDATE", 0),
      'ModeText' =>                      array("MODE_TEXT",1),
-     'CurrentArea' =>                   array("CURR_AREA",1 ),
      'PassageStatus' =>                 array("PASSAGE_STATUS", 1)
     );
 
@@ -45,11 +44,6 @@ class AMConnect extends IPSModule {
         5 => 'UNKNOWN'
     );
 
-    const currentAreaMappingAM = array(
-        0 => 'AREA_UNDEFINED',
-        1 => 'AREA_A',
-        2 => 'AREA_B'
-    );
 
     const passageStatusMappingAM = array(
         0 => 'PASSAGE_UNDEFINED',
@@ -72,7 +66,6 @@ class AMConnect extends IPSModule {
 
         // Variable Profiles
         //AMConnect.StatusGroup
-        //AMConnect.CurrentArea
         //AMConnect.PassageStatus
 
 
@@ -139,7 +132,6 @@ class AMConnect extends IPSModule {
         $this->RegisterVariableBoolean('Active', $this->Translate('Active'), '~Switch');
         $this->RegisterVariableString('LastUpdate', $this->Translate('LastUpdate'));
         $this->RegisterVariableString('ModeText', $this->Translate('ModeText'));
-        $this->RegisterVariableString('CurrentArea', $this->Translate('CurrentArea'));
         $this->RegisterVariableString('PassageStatus', $this->Translate('PassageStatus'));
 
         $this->EnableAction('Mode');
@@ -221,6 +213,24 @@ class AMConnect extends IPSModule {
     public function SendCommand()
     {
         if($this->GetStatus() == self::STATUS_ACTIVE){
+            // TODO
+            $url         = $url . 'effects';
+            $result      = json_decode(Sys_GetURLContent($url . 'effects/effectsList'), true);
+            $postfields  = '{"select":"' . $result[array_rand($result)] . '"}';
+            $requesttype = 'PUT';
+            $ch      = curl_init($url);
+            $options = [
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_CUSTOMREQUEST  => $requesttype,
+                CURLOPT_HTTPHEADER     => ['Content-type: application/json'], ];
+            curl_setopt_array($ch, $options);
+            if ($requesttype == 'PUT' || $requesttype == 'POST') {
+                curl_setopt($ch, CURLOPT_POSTFIELDS, $postfields);
+            }
+            $result = curl_exec($ch);
+            curl_close($ch);
+            $this->SendDebug('Nanoleaf Command Response: ', json_encode($result), 0);
+
 //            $ip = $this->ReadPropertyString('IP');
 //            $url = "http://$ip/aircon/set_control_info";
 //            $fanRatesRev = array(
