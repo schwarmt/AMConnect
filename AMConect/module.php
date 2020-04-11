@@ -173,7 +173,7 @@ class AMConnect extends IPSModule {
             case 'Mode':
                 SetValue($this->GetIDForIdent($Ident), $Value);
                 $mode_text = "";
-                foreach ($this->modeMappingAM as $key => $value){
+                foreach ($this::modeMappingAM as $key => $value){
                         if($key == $Value){
                             $mode_text = $value;
                         };
