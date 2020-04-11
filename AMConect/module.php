@@ -288,12 +288,7 @@ class AMConnect extends IPSModule {
                 }
             }
             // Update-Timestamp Nachverarbeitung
-            $unixString = GetValueString($this->GetIDForIdent('LastUpdate'));
-            IPS_LogMessage($_IPS['SELF'], ">unixString: $unixString");
-            $dt= DateTime::createFromFormat("YmdHis",$unixString );
-            IPS_LogMessage($_IPS['SELF'], ">dt: $dt");
-            $unixTS =  $dt->getTimestamp();
-            IPS_LogMessage($_IPS['SELF'], " >unixTS $unixTS");
+            $unixTS =  DateTime::createFromFormat("YmdHis", GetValueString($this->GetIDForIdent('LastUpdate')))->getTimestamp();
             SetValueInteger($this->GetIDForIdent("LastUpdateTS"), $unixTS);
             $unixTS =  DateTime::createFromFormat("YmdHis", GetValueString($this->GetIDForIdent('LastUpdateStatus')))->getTimestamp();
             SetValueInteger($this->GetIDForIdent("LastUpdateStatusTS"), $unixTS);
