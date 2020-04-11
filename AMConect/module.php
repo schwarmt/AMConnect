@@ -172,7 +172,10 @@ class AMConnect extends IPSModule {
         switch ($Ident) {
             case 'Mode':
                 SetValue($this->GetIDForIdent($Ident), $Value);
-                // TODO: Mode-Änderung
+                $mode_text = $this->mappingAM->$Value;
+                IPS_LogMessage($_IPS['SELF'], "found mode:".$mode_text);
+                SetValueString($this->GetIdentForIdent("ModeText"), $mode_text);
+                //SendMode();
                 break;
             case 'Active':
                 $this->SetActive($Value);
@@ -221,6 +224,29 @@ class AMConnect extends IPSModule {
             $this->SetTimerInterval('UpdateData', 0);
         }
         return $success;
+    }
+
+    function SendMode()
+    {
+        if($this->GetStatus() == self::STATUS_ACTIVE) {
+            $ip =$this->ReadPropertyString("IP");
+            $port = $this->ReadPropertyString("Port");
+            $url         = "http://".$ip.":".$port."/api/amstatus/MODE";
+            $postfields  = '{"MODE":"'.GetValueString($this->GetIDForIdent('ModeText')).'"}';
+            $requesttype = 'PUT';
+            $ch      = curl_init($url);
+            $options = [
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_CUSTOMREQUEST  => $requesttype,
+                CURLOPT_HTTPHEADER     => ['Content-type: application/json'], ];
+            curl_setopt_array($ch, $options);
+            if ($requesttype == 'PUT' || $requesttype == 'POST') {
+                curl_setopt($ch, CURLOPT_POSTFIELDS, $postfields);
+            }
+            $result = curl_exec($ch);
+            curl_close($ch);
+            //echo($result);
+        }
     }
 
     public function SendCommand()
