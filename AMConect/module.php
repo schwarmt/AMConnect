@@ -13,10 +13,10 @@ class AMConnect extends IPSModule {
      'Status' =>                         array("STATUS", 1),
      'StatusText' =>                     array("STATUS_TEXT", 1),
      'Mode' =>                           array("MODE", 1),
-     'BatteryTemperature' =>             array("BATTERY_TEMPERATURE", 0.01),
+     'BatteryTemperature' =>             array("BATTERY_TEMPERATURE", 1),
      'TimeSinceCharging' =>              array("TIME_SINCE_CHARGING", 1),
      'ChargingTemperature' =>            array("CHARGING_TEMPERATURE", 1),
-     'TimeToNextMeasure' =>              array("TIME_TO_NEXT_MEASURE", 1),
+     'TimeToNextMeasure' =>              array("TIME_TO_NEXT_MEASURE", 0.0167),
      'ChargingNumber' =>                 array("CHARGING_NUMBER", 1),
      'MowingDuration' =>                 array("MOWING_DURATION", 1),
      'BatteryCapacity' =>                array("BATTERY_CAPACITY", 1),
@@ -110,7 +110,7 @@ class AMConnect extends IPSModule {
             IPS_SetVariableProfileIcon("AMConnect.Minutes", "");
         }
 
-        $this->RegisterVariableInteger('Current', $this->Translate('Current'), 'AMConnect.Minutes');
+        $this->RegisterVariableInteger('Current', $this->Translate('Current'), 'AMConnect.mAh');
         $this->RegisterVariableInteger('ChargingTime', $this->Translate('ChargingTime'), 'AMConnect.Minutes');
         $this->RegisterVariableInteger('ChargingCapacity', $this->Translate('ChargingCapacity'), 'AMConnect.mAh');
         $this->RegisterVariableInteger('ChargingSearch', $this->Translate('ChargingSearch'), 'AMConnect.mAh');
@@ -230,28 +230,6 @@ class AMConnect extends IPSModule {
             $result = curl_exec($ch);
             curl_close($ch);
             $this->SendDebug('Nanoleaf Command Response: ', json_encode($result), 0);
-
-//            $ip = $this->ReadPropertyString('IP');
-//            $url = "http://$ip/aircon/set_control_info";
-//            $fanRatesRev = array(
-//                0 => "A", 1 => "B", 2 => "3", 3 => "4", 4 => "5", 5 => "6", 6 => "7");
-//            $data = array(
-//                'pow' => strval(GetValueBoolean($this->GetIDForIdent('Power')) ? "1" : "0"),
-//                'mode' => strval(GetValueInteger($this->GetIDForIdent('FanMode'))),
-//                'stemp' => strval(GetValueFloat($this->GetIDForIdent('TargetTemperature'))),
-//                'shum' => '0',
-//                'f_rate' => strval($fanRatesRev[GetValueInteger($this->GetIDForIdent('FanRate'))]),
-//                'f_dir' => strval(GetValueInteger($this->GetIDForIdent('FanDirection'))));
-//            $options = array(
-//                'http' => array(
-//                    'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
-//                    'method'  => 'GET',
-//                    'content' => http_build_query($data)
-//                )
-//            );
-//            $content = http_build_query($data);
-//            $context  = stream_context_create($options);
-//            file_get_contents("$url?$content", false, $context);
         }
     }
 
