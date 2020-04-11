@@ -26,6 +26,7 @@ class AMConnect extends IPSModule {
      'StatusSimulated' =>               array ("SIMULATED_STATUS", 1),
      'StatusGroup' =>                   array("STATUS_GROUP", 1),
      'LastUpdate' =>                    array("LAST_UPDATE", 0),
+     'LastUpdateStatus' =>              array("LAST_UPDATE_STATUS", 0),
      'ModeText' =>                      array("MODE_TEXT",1),
      'PassageStatus' =>                 array("PASSAGE_STATUS", 1)
     );
@@ -102,6 +103,14 @@ class AMConnect extends IPSModule {
             IPS_SetVariableProfileIcon("AMConnect.mAh", "");
         }
 
+        if (!IPS_VariableProfileExists('AMConnect.mA')) {
+            IPS_CreateVariableProfile("AMConnect.mA", 1);
+            IPS_SetVariableProfileText("AMConnect.mA", "", " mA");
+            IPS_SetVariableProfileValues("AMConnect.mA", 0, 0, 0);
+            IPS_SetVariableProfileDigits("AMConnect.mA", 0);
+            IPS_SetVariableProfileIcon("AMConnect.mA", "");
+        }
+
         if (!IPS_VariableProfileExists('AMConnect.Minutes')) {
             IPS_CreateVariableProfile("AMConnect.Minutes", 1);
             IPS_SetVariableProfileText("AMConnect.Minutes", "", " min");
@@ -110,7 +119,7 @@ class AMConnect extends IPSModule {
             IPS_SetVariableProfileIcon("AMConnect.Minutes", "");
         }
 
-        $this->RegisterVariableInteger('Current', $this->Translate('Current'), 'AMConnect.mAh');
+        $this->RegisterVariableInteger('Current', $this->Translate('Current'), 'AMConnect.mA');
         $this->RegisterVariableInteger('ChargingTime', $this->Translate('ChargingTime'), 'AMConnect.Minutes');
         $this->RegisterVariableInteger('ChargingCapacity', $this->Translate('ChargingCapacity'), 'AMConnect.mAh');
         $this->RegisterVariableInteger('ChargingSearch', $this->Translate('ChargingSearch'), 'AMConnect.mAh');
@@ -131,8 +140,12 @@ class AMConnect extends IPSModule {
         $this->RegisterVariableString('StatusGroup', $this->Translate('StatusGroup'));
         $this->RegisterVariableBoolean('Active', $this->Translate('Active'), '~Switch');
         $this->RegisterVariableString('LastUpdate', $this->Translate('LastUpdate'));
+        $this->RegisterVariableString('LastUpdateStatus', $this->Translate('LastUpdateStatus'));
         $this->RegisterVariableString('ModeText', $this->Translate('ModeText'));
         $this->RegisterVariableString('PassageStatus', $this->Translate('PassageStatus'));
+        $this->RegisterVariableString('LastUpdateTS', $this->Translate('LastUpdate'), '~UnixTimestamp');
+        $this->RegisterVariableString('LastUpdateStatusTS', $this->Translate('LastUpdate'), '~UnixTimestamp');
+
 
         $this->EnableAction('Mode');
         $this->EnableAction('Active');
@@ -274,6 +287,11 @@ class AMConnect extends IPSModule {
                     }
                 }
             }
+            // Update-Timestamp Nachverarbeitung
+            $unixTS =  DateTime::createFromFormat("YYYYMMDDHHIISS", GetValueString($this->GetIDForIdent('LastUpdate')))->getTimestamp();
+            SetValueInteger($this->GetIDForIdent("LastUpdateTS"), $unixTS);
+            $unixTS =  DateTime::createFromFormat("YYYYMMDDHHIISS", GetValueString($this->GetIDForIdent('LastUpdateStatus')))->getTimestamp();
+            SetValueInteger($this->GetIDForIdent("LastUpdateStatusTS"), $unixTS);
         }
         return true;
      }
