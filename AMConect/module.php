@@ -172,10 +172,17 @@ class AMConnect extends IPSModule {
         switch ($Ident) {
             case 'Mode':
                 SetValue($this->GetIDForIdent($Ident), $Value);
-                $mode_text = $this->mappingAM->$Value;
-                IPS_LogMessage($_IPS['SELF'], "found mode:".$mode_text);
-                SetValueString($this->GetIdentForIdent("ModeText"), $mode_text);
-                //SendMode();
+                $mode_text = "";
+                foreach ($this->modeMappingAM as $key => $value){
+                        if($key == $Value){
+                            $mode_text = $value;
+                        };
+                }
+                if($mode_tex != ""){
+                    IPS_LogMessage($_IPS['SELF'], "found mode:".$mode_text);
+                    SetValueString($this->GetIdentForIdent("ModeText"), $mode_text);
+                    //SendMode();
+                }
                 break;
             case 'Active':
                 $this->SetActive($Value);
