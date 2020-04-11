@@ -289,10 +289,15 @@ class AMConnect extends IPSModule {
             }
             // Update-Timestamp Nachverarbeitung
             $unixTS =  DateTime::createFromFormat("YmdHis", GetValueString($this->GetIDForIdent('LastUpdate')))->getTimestamp();
-            SetValueInteger($this->GetIDForIdent("LastUpdateTS"), $unixTS);
+            if($unixTS != ""){
+                SetValueInteger($this->GetIDForIdent("LastUpdateStatusTS"), $unixTS);
+            }
             $unixTS =  DateTime::createFromFormat("YmdHis", GetValueString($this->GetIDForIdent('LastUpdateStatus')))->getTimestamp();
-            SetValueInteger($this->GetIDForIdent("LastUpdateStatusTS"), $unixTS);
+            if($unixTS != ""){
+                SetValueInteger($this->GetIDForIdent("LastUpdateStatusTS"), $unixTS);
+            }
         }
+
         return true;
      }
 }
