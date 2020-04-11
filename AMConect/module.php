@@ -143,8 +143,8 @@ class AMConnect extends IPSModule {
         $this->RegisterVariableString('LastUpdateStatus', $this->Translate('LastUpdateStatus'));
         $this->RegisterVariableString('ModeText', $this->Translate('ModeText'));
         $this->RegisterVariableString('PassageStatus', $this->Translate('PassageStatus'));
-        $this->RegisterVariableString('LastUpdateTS', $this->Translate('LastUpdate'), '~UnixTimestamp');
-        $this->RegisterVariableString('LastUpdateStatusTS', $this->Translate('LastUpdate'), '~UnixTimestamp');
+        $this->RegisterVariableInteger('LastUpdateTS', $this->Translate('LastUpdate'), '~UnixTimestamp');
+        $this->RegisterVariableInteger('LastUpdateStatusTS', $this->Translate('LastUpdateStatusTS'), '~UnixTimestamp');
 
 
         $this->EnableAction('Mode');
