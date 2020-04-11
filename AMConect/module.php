@@ -178,7 +178,7 @@ class AMConnect extends IPSModule {
                             $mode_text = $value;
                         };
                 }
-                if($mode_tex != ""){
+                if($mode_text != ""){
                     IPS_LogMessage($_IPS['SELF'], "found mode:".$mode_text);
                     SetValueString($this->GetIdentForIdent("ModeText"), $mode_text);
                     //SendMode();
