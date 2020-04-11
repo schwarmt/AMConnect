@@ -181,7 +181,7 @@ class AMConnect extends IPSModule {
                 if($mode_text != ""){
                     IPS_LogMessage($_IPS['SELF'], "found mode:".$mode_text);
                     SetValueString($this->GetIDForIdent("ModeText"), $mode_text);
-                    SendMode();
+                    $this->SendMode();
                 }
                 break;
             case 'Active':
@@ -236,9 +236,9 @@ class AMConnect extends IPSModule {
     function SendMode()
     {
         if($this->GetStatus() == self::STATUS_ACTIVE) {
-            $ip =$this->ReadPropertyString("IP");
+            $ip   = $this->ReadPropertyString("IP");
             $port = $this->ReadPropertyString("Port");
-            $url         = "http://".$ip.":".$port."/api/amstatus/MODE";
+            $url  = "http://".$ip.":".$port."/api/amstatus/MODE";
             $postfields  = '{"MODE":"'.GetValueString($this->GetIDForIdent('ModeText')).'"}';
             $requesttype = 'PUT';
             $ch      = curl_init($url);
