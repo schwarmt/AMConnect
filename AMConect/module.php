@@ -298,7 +298,7 @@ class AMConnect extends IPSModule {
             // nicht erfolgreich
         }
         else {
-            $json = json_decode($content);
+            $json = json_decode($content, true);
             foreach ($this->mappingAM as $key => $value){
                 $Variablen_ID = $this->GetIDForIdent($key);
                 if(isset($Variablen_ID)) {
