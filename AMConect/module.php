@@ -1,11 +1,14 @@
-<?php
+<?php /** @noinspection ALL */
+
+/** @noinspection PhpConditionAlreadyCheckedInspection */
+
 class AMConnect extends IPSModule {
 
     const STATUS_ACTIVE = 102;
     const STATUS_INACTIVE = 104;
     const STATUS_ERROR = 200;
 
-    private $mappingAM = array(
+    private array $mappingAM = array(
      'Current' =>                        array("CURRENT", 1),
      'ChargingTime' =>                   array("CHARGING_TIME", 1),
      'ChargingCapacity' =>               array("CHARGING_CAPACITY", 1),
@@ -164,9 +167,12 @@ class AMConnect extends IPSModule {
     {
         //Never delete this line!
         parent::ApplyChanges();
-        $this->validateConnectionAndStatus(boolval(GetValueBoolean($this->GetIDForIdent('Active'))));
+        $this->validateConnectionAndStatus(GetValueBoolean($this->GetIDForIdent('Active')));
     }
 
+    /**
+     * @throws Exception
+     */
     public function RequestAction($Ident, $Value)
     {
         switch ($Ident) {
@@ -176,7 +182,7 @@ class AMConnect extends IPSModule {
                 foreach ($this::modeMappingAM as $key => $value){
                         if($key == $Value){
                             $mode_text = $value;
-                        };
+                        }
                 }
                 if($mode_text != ""){
                     IPS_LogMessage($_IPS['SELF'], "found mode:".$mode_text);
@@ -192,7 +198,7 @@ class AMConnect extends IPSModule {
         }
     }
 
-    public function SetActive(bool $Active)
+    public function SetActive(bool $Active): bool
     {
         SetValue($this->GetIDForIdent('Active'), $Active);
         $this->validateConnectionAndStatus($Active);
@@ -207,7 +213,7 @@ class AMConnect extends IPSModule {
         }
     }
 
-    private function validateConnectionAndStatus(bool $active)
+    private function validateConnectionAndStatus(bool $active): bool
     {
         $success=false;
         if (($this->ReadPropertyString('IP') != "") && ($this->ReadPropertyInteger('Period') > 0) && ($this->ReadPropertyString('Port') != "")) {
@@ -233,6 +239,7 @@ class AMConnect extends IPSModule {
         return $success;
     }
 
+    /** @noinspection PhpConditionAlreadyCheckedInspection */
     function SendMode()
     {
         if($this->GetStatus() == self::STATUS_ACTIVE) {
@@ -247,6 +254,7 @@ class AMConnect extends IPSModule {
                 CURLOPT_CUSTOMREQUEST  => $requesttype,
                 CURLOPT_HTTPHEADER     => ['Content-type: application/json'], ];
             curl_setopt_array($ch, $options);
+            /** @noinspection PhpConditionAlreadyCheckedInspection */
             if ($requesttype == 'PUT' || $requesttype == 'POST') {
                 curl_setopt($ch, CURLOPT_POSTFIELDS, $postfields);
             }
@@ -280,7 +288,7 @@ class AMConnect extends IPSModule {
     }
 
 
-    public function UpdateData()
+    public function UpdateData(): bool
     {
         $ip =$this->ReadPropertyString("IP");
         $port = $this->ReadPropertyString("Port");
@@ -292,12 +300,11 @@ class AMConnect extends IPSModule {
         else {
             $json = json_decode($content);
             foreach ($this->mappingAM as $key => $value){
-                $Variablen_ID = null;
                 $Variablen_ID = $this->GetIDForIdent($key);
                 if(isset($Variablen_ID)) {
                     $id=$value[0];
                     $factor=$value[1];
-                    if(array_key_exists($id,$json)){
+                    if(isset($json[$id])){
                         $am_value = $json->$id;
                         $Variable_Daten = IPS_GetVariable($Variablen_ID);
                         // 0 = Bool, 1 = Integer, 2 = Float, 3 = String
