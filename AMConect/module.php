@@ -299,7 +299,7 @@ class AMConnect extends IPSModule {
         }
         else {
             $json = array(json_decode($content, true));
-            echo "json: ".$json;
+            echo "json: ".var_dump($json);
             foreach ($this->mappingAM as $key => $value){
                 $Variablen_ID = $this->GetIDForIdent($key);
                 if(isset($Variablen_ID)) {
